@@ -3,7 +3,7 @@ import streamlit as st
 # Título de la app
 st.title("¿QUE MEDICMENTO QUIERES VER HOY?")
 # Texto simple
-st.header("Encabezado")
+st.header("sigue aca:")
 
 st.write("Hola, soy [TU NOMBRE] y esta es mi primera aplicación con Streamlit.")
 
@@ -13,7 +13,7 @@ nombre = st.text_input("¿Cómo te llamas?")
 # Respuesta condicional
 if nombre:
     st.write(f"¡Hola, {nombre}! Bienvenido/a a mi app")
-
+opcion = st.selectbox("Elige cuantos medicamentos quieres", ["1", "2", "3"])
 # Un botón
 if st.button("Presiona aquí"):
     st.balloons()  # Animación de globos
