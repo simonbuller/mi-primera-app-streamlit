@@ -12,8 +12,6 @@ cuando = st.number_input("¿en cuantos dias lo quieres?", min_value=0, max_value
 
 opcion = st.selectbox("Elige cuantos medicamentos quieres", ["1", "2", "3"])
 
-# Respuesta condicional
-st.write(f"¡Hola, {nombre}! Bienvenido/a a mi app")
 
 # Un botón
 if st.button("Presiona aquí"):
