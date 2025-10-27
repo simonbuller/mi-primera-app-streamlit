@@ -3,6 +3,8 @@ import streamlit as st
 # Título de la app
 st.title("¿QUE MEDICMENTO QUIERES VER HOY?")
 # Texto simple
+st.header("Encabezado")
+
 st.write("Hola, soy [TU NOMBRE] y esta es mi primera aplicación con Streamlit.")
 
 # Un input interactivo
