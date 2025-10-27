@@ -8,7 +8,7 @@ st.header("sigue aca:")
 st.write("Hola, soy [TU NOMBRE] y esta es mi primera aplicación con Streamlit.")
 
 # Un input interactivo
-edad = st.number_input("¿donde vives?", min_value=0, max_value=120)
+cuando = st.number_input("¿en cuantos dias lo quieres?", min_value=0, max_value=10)
 
 # Respuesta condicional
 if nombre:
