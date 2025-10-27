@@ -10,9 +10,11 @@ st.write("Hola, soy [TU NOMBRE] y esta es mi primera aplicación con Streamlit."
 # Un input interactivo
 cuando = st.number_input("¿en cuantos dias lo quieres?", min_value=0, max_value=10)
 
+opcion = st.selectbox("Elige cuantos medicamentos quieres", ["1", "2", "3"])
+
 # Respuesta condicional
 st.write(f"¡Hola, {nombre}! Bienvenido/a a mi app")
-opcion = st.selectbox("Elige cuantos medicamentos quieres", ["1", "2", "3"])
+
 # Un botón
 if st.button("Presiona aquí"):
     st.balloons()  # Animación de globos
