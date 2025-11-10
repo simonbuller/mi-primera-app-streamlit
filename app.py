@@ -17,7 +17,7 @@ CATEGORIAS = ["Analgésicos", "Antibióticos", "Vitaminas", "Respiratorios", "De
 PRODUCTOS = [
     {
         "nombre": "Paracetamol 500mg",
-        "img": "https://via.placeholder.com/300x200.png?text=Paracetamol+500mg",
+        "img": "https://www.laboratoriochile.cl/wp-content/uploads/2015/11/Paracetamol_500MG_16C_BE_HD.jpg",
         "categoria": "Analgésicos",
         "precios": {
             "Cruz Verde": 1290,
