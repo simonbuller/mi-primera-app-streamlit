@@ -16,7 +16,7 @@ CATEGORIAS = ["Analgésicos", "Antibióticos", "Vitaminas", "Respiratorios", "De
 
 PRODUCTOS = [
     {
-        "nombre": "Paracetamol (B) 16 Comprimidos",
+        "nombre": "Paracetamol",
         "img": "https://www.laboratoriochile.cl/wp-content/uploads/2015/11/Paracetamol_500MG_16C_BE_HD.jpg",
         "categoria": "Analgésicos",
         "precios": {
