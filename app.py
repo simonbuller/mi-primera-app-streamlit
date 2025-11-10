@@ -21,7 +21,7 @@ PRODUCTOS = [
         "categoria": "Analgésicos",
         "precios": {
             "Cruz Verde": $ 327,
-            "Salcobrand": $1.199,
+            "Salcobrand": $ 1.055,
             "Ahumada": 1350
         }
     },
@@ -31,7 +31,7 @@ PRODUCTOS = [
         "categoria": "Analgésicos",
         "precios": {
             "Cruz Verde": 1850,
-            "Salcobrand": 1790,
+            "Salcobrand": 1.055,
             "Ahumada": 1920
         }
     },
