@@ -37,7 +37,7 @@ PRODUCTOS = [
     },
     {
         "nombre": "Amoxicilina 500mg",
-        "img": "https://via.placeholder.com/300x200.png?text=Amoxicilina+500mg",
+        "img": "https://product-img.cofar.cl/products/2RSESMdiRTtNZnTBG/images/2.webp",
         "categoria": "Antibióticos",
         "precios": {
             "Cruz Verde": 3890,
@@ -47,7 +47,7 @@ PRODUCTOS = [
     },
     {
         "nombre": "Vitamina C 1g",
-        "img": "https://via.placeholder.com/300x200.png?text=Vitamina+C+1g",
+        "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT79-M0LnW1j69HsjvaOQrVnrD41dNlTBV_ng&s",
         "categoria": "Vitaminas",
         "precios": {
                 "Cruz Verde": 2490,
