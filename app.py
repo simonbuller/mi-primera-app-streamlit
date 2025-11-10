@@ -20,8 +20,8 @@ PRODUCTOS = [
         "img": "https://www.laboratoriochile.cl/wp-content/uploads/2015/11/Paracetamol_500MG_16C_BE_HD.jpg",
         "categoria": "Analgésicos",
         "precios": {
-            "Cruz Verde": $ 327,
-            "Salcobrand": $ 1055,
+            "Cruz Verde": 327,
+            "Salcobrand":  1055,
             "Ahumada": 1350
         }
     },
