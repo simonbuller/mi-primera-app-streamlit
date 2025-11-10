@@ -1,20 +1,44 @@
 import streamlit as st
 
-# Título de la app
-st.title("¿QUE MEDICMENTO QUIERES VER HOY?")
-# Texto simple
-st.header("sigue aca:")
+import streamlit as st
+import pandas as pd
 
-st.write("Hola, soy [TU NOMBRE] y esta es mi primera aplicación con Streamlit.") 
+# 🎯 Configuración general
+st.set_page_config(page_title="Comparador de Precios de Farmacias", page_icon="💊", layout="centered")
 
+st.title("💊 Comparador de Precios de Farmacias en Chile")
+st.markdown("Compara precios de medicamentos entre las principales farmacias del país 🇨🇱")
 
-# Un input interactivo
-cuando = st.number_input("¿en cuantos dias lo quieres?", min_value=0, max_value=10)
+# 💾 Datos simulados (puedes reemplazar por un CSV o una API)
+data = {
+    "Medicamento": ["Paracetamol 500mg", "Ibuprofeno 400mg", "Amoxicilina 500mg"],
+    "Cruz Verde": [1290, 1850, 3890],
+    "Salcobrand": [1150, 1790, 3550],
+    "Ahumada": [1350, 1920, 3990]
+}
 
-opcion = st.selectbox("Elige cuantos medicamentos quieres", ["1", "2", "3"])
+df = pd.DataFrame(data)
 
-if st.button("Click aquí"):st.write("¡invalido!")
-# Un botón
-if st.button("Presiona aquí"):
-    st.balloons()  # Animación de globos
-    st.success("¡Funciona perfectamente!")
+# 🔍 Entrada del usuario
+producto = st.text_input("Ingresa el nombre del medicamento (ej: Paracetamol 500mg):")
+
+# 📊 Mostrar resultados
+if producto:
+    resultado = df[df["Medicamento"].str.lower() == producto.lower()]
+    if not resultado.empty:
+        precios = resultado.melt(id_vars=["Medicamento"], var_name="Farmacia", value_name="Precio (CLP)")
+        menor = precios["Precio (CLP)"].min()
+        precios["Más barato"] = precios["Precio (CLP)"] == menor
+
+        st.subheader(f"Resultados para: `{producto}`")
+        st.dataframe(precios.style.apply(lambda x: ['background: #c8e6c9' if v else '' for v in x["Más barato"]], axis=1))
+        
+        st.success(f"💰 La farmacia más barata es **{precios.loc[precios['Más barato'], 'Farmacia'].values[0]}**, con ${menor:,}")
+    else:
+        st.warning("⚠️ Producto no encontrado. Intenta con Paracetamol, Ibuprofeno o Amoxicilina.")
+else:
+    st.info("🔎 Escribe un nombre de medicamento arriba para comenzar la búsqueda.")
+
+# 📈 Información adicional
+st.markdown("---")
+st.caption("Aplicación demostrativa creada con [Streamlit](https://streamlit.io) — Datos ficticios. Autor: Mónica Stambuk © 2025")
