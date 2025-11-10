@@ -27,7 +27,7 @@ PRODUCTOS = [
     },
     {
         "nombre": "Ibuprofeno 400mg",
-        "img": "https://via.placeholder.com/300x200.png?text=Ibuprofeno+400mg",
+        "img": "https://www.laboratoriochile.cl/wp-content/uploads/2019/03/Ibuprofeno_400MG_20C_BE_HD.jpg",
         "categoria": "Analgésicos",
         "precios": {
             "Cruz Verde": 1850,
