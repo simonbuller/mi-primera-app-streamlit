@@ -1,7 +1,7 @@
 import streamlit as st
 
 # ============= CONFIG =============
-st.set_page_config(page_title="Comparador Farmacias Chile", page_icon="💊", layout="wide")
+st.set_page_config(page_title="Compara para ti", page_icon="💊", layout="wide")
 
 # Estado inicial
 if "page" not in st.session_state:
@@ -9,7 +9,7 @@ if "page" not in st.session_state:
 if "producto" not in st.session_state:
     st.session_state["producto"] = None
 if "categoria" not in st.session_state:
-    st.session_state["categoria"] = "Destacados"
+    st.session_state["categoria"] = "Productos destacados"
 
 # ======== DATA DE EJEMPLO (placeholder) ========
 CATEGORIAS = ["Analgésicos", "Antibióticos", "Vitaminas", "Respiratorios", "Dermatológicos", "Digestivos", "Cuidado personal"]
