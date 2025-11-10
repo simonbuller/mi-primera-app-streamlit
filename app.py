@@ -21,7 +21,7 @@ PRODUCTOS = [
         "categoria": "Analgésicos",
         "precios": {
             "Cruz Verde": $ 327,
-            "Salcobrand": $1.199 Precio Farmacia  $1.055 Precio Internet,
+            "Salcobrand": $1.199 "Precio Farmacia  $1.055 Precio Internet",
             "Ahumada": 1350
         }
     },
