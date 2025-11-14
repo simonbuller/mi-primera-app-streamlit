@@ -63,6 +63,16 @@ PRODUCTOS = [
                 "Cruz Verde": 11.781,
                 "Salcobrand": 11.351,
                 "Ahumada": 13.199
+       }
+    },
+    {
+        "nombre": "Brexotide LF 125 mcg /25 mcg 120 Dosis Aerosol para Inhalación",
+        "img": "https://www.farmaciasahumada.cl/on/demandware.static/-/Sites-ahumada-master-catalog/default/dw82bc8424/images/products/60146/60146.jpg",
+        "categoria": "Respiratorios",
+        "precios": {
+                "Cruz Verde": 38.538,
+                "Salcobrand": 52.711,
+                "Ahumada": 38.726
         }
     },
 ]
