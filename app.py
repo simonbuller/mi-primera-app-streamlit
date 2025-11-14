@@ -53,6 +53,16 @@ PRODUCTOS = [
                 "Cruz Verde": 2490,
                 "Salcobrand": 2290,
                 "Ahumada": 2590
+       }
+    },
+    {
+        "nombre": "Salbutamol 0,5% Solución para Nebulización 20 mL",
+        "img": "https://farmacia.araucomed.com/8205-large_default/salbutamol-solucion-5mg-ml-x20ml-ethon.jpg",
+        "categoria": "Respiratorios",
+        "precios": {
+                "Cruz Verde": 11.781,
+                "Salcobrand": 11.351,
+                "Ahumada": 13.199
         }
     },
 ]
