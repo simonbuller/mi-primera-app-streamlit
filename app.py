@@ -96,6 +96,27 @@ PRODUCTOS = [
             "Ahumada": 40.589
         }
     },
+    {
+        "nombre": "Tetralysal Limeciclina 300 mg 28 Cápsulas",
+        "img": "https://beta.cruzverde.cl/on/demandware.static/-/Sites-masterCatalog_Chile/default/dwff3b20e8/images/large/263025-tetralysal-capsula-28-unidades-limeciclina-300-mg.jpg",
+        "categoria": "Dermatológicos",
+        "precios": {
+            "Cruz Verde": 42.471,
+            "Salcobrand": 49.999,
+            "Ahumada": 40.589
+        }
+    },
+    {
+        "nombre": "Prozone Gel Fotoprotector FPS30 100 gr",
+        "img": "https://beta.cruzverde.cl/on/demandware.static/-/Sites-masterCatalog_Chile/default/dwad1227f9/images/large/565638-prozone-gel-fotoprotector-fps-30-100-gr.jpg",
+        "categoria": "Dermatológicos",
+        "precios": {
+            "Cruz Verde": 16.050,
+            "Salcobrand": 19.999,
+            "Ahumada": 17.589
+            
+        }
+    },
 ]
 
 ICON_INSTAGRAM = "https://cdn-icons-png.flaticon.com/512/2111/2111463.png"
