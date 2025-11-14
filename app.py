@@ -134,6 +134,27 @@ PRODUCTOS = [
             "Cruz Verde": 1.386,
             "Salcobrand": 1.979,
             "Ahumada": 1.589
+        }
+    },
+    {
+        "nombre": "Desodorante Spray Stainguard 150 ml",
+        "img": "https://beta.cruzverde.cl/on/demandware.static/-/Sites-masterCatalog_Chile/default/dw0dbee912/images/large/289097-desodorante-spray-stainguard-150-ml.jpg",
+        "categoria": "Cuidado personal",
+        "precios": {
+            "Cruz Verde": 2.890,
+            "Salcobrand": 2.861,
+            "Ahumada": 2.589
+        }
+    },
+    {
+        "nombre": "Desodorante Spray Stainguard 150 ml",
+        "img": "https://beta.cruzverde.cl/on/demandware.static/-/Sites-masterCatalog_Chile/default/dwe2d7c94d/images/large/578312-1.jpg",
+        "categoria": "Cuidado personal",
+        "precios": {
+            "Cruz Verde": 7.990,
+            "Salcobrand": 8.861,
+            "Ahumada": 7.879
+            
             
         }
     },
