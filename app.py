@@ -155,7 +155,6 @@ PRODUCTOS = [
             "Salcobrand": 8.861,
             "Ahumada": 7.879
             
-            
         }
     },
 ]
