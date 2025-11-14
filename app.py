@@ -147,7 +147,7 @@ PRODUCTOS = [
         }
     },
     {
-        "nombre": "Desodorante Spray Stainguard 150 ml",
+        "nombre": "Enjuague Bucal Cuidado Total 1LT",
         "img": "https://beta.cruzverde.cl/on/demandware.static/-/Sites-masterCatalog_Chile/default/dwe2d7c94d/images/large/578312-1.jpg",
         "categoria": "Cuidado personal",
         "precios": {
