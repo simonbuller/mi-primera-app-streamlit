@@ -114,6 +114,26 @@ PRODUCTOS = [
             "Cruz Verde": 16.050,
             "Salcobrand": 19.999,
             "Ahumada": 17.589
+        }
+    },
+    {
+        "nombre": "Metoclopramida 10 mg 24 Comprimidos",
+        "img": "https://beta.cruzverde.cl/on/demandware.static/-/Sites-masterCatalog_Chile/default/dw06526206/images/large/268208.1.jpg",
+        "categoria": "Digestivos",
+        "precios": {
+            "Cruz Verde": 1.791,
+            "Salcobrand": 1.999,
+            "Ahumada": 1.589
+        }
+    },
+    {
+        "nombre": "Domperidona 10 mg 20 comprimidos Genéricos",
+        "img": "https://beta.cruzverde.cl/on/demandware.static/-/Sites-masterCatalog_Chile/default/dw6955679e/images/large/272620-domperidona-bioequivalente-comprimido-20-unidades-domperidona-10-mg.jpg",
+        "categoria": "Digestivos",
+        "precios": {
+            "Cruz Verde": 1.386,
+            "Salcobrand": 1.979,
+            "Ahumada": 1.589
             
         }
     },
