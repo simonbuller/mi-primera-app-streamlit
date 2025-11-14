@@ -75,6 +75,16 @@ PRODUCTOS = [
                 "Ahumada": 38.726
         }
     },
+    {
+        "nombre": "Clavam Duo Amoxicilina 875 mg 14 Comprimidos Recubierto",
+        "img": "https://farmex.cl/cdn/shop/products/clavam-duo-875-mg-x-14-comprimidos-eurofarma-941356.jpg?v=1692989657",
+        "categoria": "Antibióticos",
+        "precios": {
+            "Cruz Verde": 21.825,
+            "Salcobrand": 21.334,
+            "Ahumada": 21.559
+        }
+    },
 ]
 
 ICON_INSTAGRAM = "https://cdn-icons-png.flaticon.com/512/2111/2111463.png"
