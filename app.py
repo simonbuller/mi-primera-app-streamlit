@@ -83,6 +83,17 @@ PRODUCTOS = [
             "Cruz Verde": 21.825,
             "Salcobrand": 21.334,
             "Ahumada": 21.559
+        
+        }
+    },
+    {
+        "nombre": "Up Omega 3 Ultra Pure 150 Cápsulas Suplemento Alimentario",
+        "img": "https://static.salcobrandonline.cl/spree/products/147184/large_webp/575894.webp?1749560150",
+        "categoria": "Vitaminas",
+        "precios": {
+            "Cruz Verde": 21.825,
+            "Salcobrand": 39.999,
+            "Ahumada": 40.589
         }
     },
 ]
