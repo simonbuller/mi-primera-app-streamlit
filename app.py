@@ -3,7 +3,7 @@ import streamlit as st
 # ============= CONFIG =============
 st.set_page_config(page_title="Compara para ti", page_icon="💊", layout="wide")
 
-# ============= ESTADO DE LA APLICACIÓN =============
+# ============= ESTADO DE LA APP =============
 if "page" not in st.session_state:
     st.session_state["page"] = "home"
 if "producto" not in st.session_state:
@@ -13,7 +13,7 @@ if "categoria" not in st.session_state:
 if "favoritos" not in st.session_state:
     st.session_state["favoritos"] = []
 
-# ======== DATA DE EJEMPLO (placeholder) ========
+# ======== DATOS ========
 CATEGORIAS = [
     "Todos", "Analgésicos", "Antibióticos", "Vitaminas",
     "Respiratorios", "Dermatológicos", "Digestivos", "Cuidado personal"
@@ -106,51 +106,52 @@ PRODUCTOS = [
     },
 ]
 
-ICON_INSTAGRAM = "https://cdn-icons-png.flaticon.com/512/2111/2111463.png"
-ICON_TIKTOK    = "https://cdn-icons-png.flaticon.com/512/3046/3046122.png"
-ICON_EMAIL     = "https://cdn-icons-png.flaticon.com/512/732/732200.png"
-
-# ============= CSS PERSONALIZADO =============
+# ============= CSS =============
 st.markdown("""
 <style>
 .main > div { padding-bottom: 90px; }
-.topbar { position: sticky; top: 0; z-index: 999; background: #fff; border-bottom: 1px solid #eee; padding: 8px 12px; }
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
-.card { border: 1px solid #eee; border-radius: 10px; padding: 10px; background: #fff; }
+.topbar { position: sticky; top: 0; z-index: 1000; background: #fff; border-bottom: 1px solid #eee; padding: 8px; }
+.card { 
+    border: 1px solid #eee; 
+    border-radius: 10px; 
+    padding: 10px; 
+    background: #fff;
+    margin-bottom: 16px;
+}
 .card img { width: 100%; height: 140px; object-fit: cover; border-radius: 8px; }
-.footer { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #eee; }
-.footer-inner { display: flex; justify-content: center; gap: 20px; padding: 10px 0; }
-.footer-inner img { width: 26px; }
+.footer { position: fixed; bottom:0; left:0; right:0; background:#fff; border-top:1px solid #eee; }
+.footer-inner { display:flex; justify-content:center; gap:20px; padding:10px 0; }
+.footer-inner img { width:26px; }
 </style>
 """, unsafe_allow_html=True)
 
 # ============= TOPBAR =============
 def topbar():
     st.markdown("<div class='topbar'>", unsafe_allow_html=True)
-    col1, col2, col3 = st.columns([0.1, 0.8, 0.1])
+    c1, c2, c3 = st.columns([0.1, 0.8, 0.1])
 
-    with col1:
-        st.button("🔍", key="buscar")
+    with c1:
+        st.button("🔍")
 
-    with col2:
-        if st.button("🏥  Comparador de Farmacias", key="home_logo"):
+    with c2:
+        if st.button("🏥  Comparador de Farmacias"):
             st.session_state["page"] = "home"
             st.session_state["producto"] = None
 
-    with col3:
-        if st.button("☰", key="menu"):
+    with c3:
+        if st.button("☰"):
             st.session_state["page"] = "menu"
 
     st.markdown("</div>", unsafe_allow_html=True)
 
 # ============= FOOTER =============
 def footer():
-    st.markdown(f"""
+    st.markdown("""
     <div class='footer'>
         <div class='footer-inner'>
-            <img src='{ICON_INSTAGRAM}'/>
-            <img src='{ICON_TIKTOK}'/>
-            <img src='{ICON_EMAIL}'/>
+            <img src='https://cdn-icons-png.flaticon.com/512/2111/2111463.png'/>
+            <img src='https://cdn-icons-png.flaticon.com/512/3046/3046122.png'/>
+            <img src='https://cdn-icons-png.flaticon.com/512/732/732200.png'/>
         </div>
         <div style='text-align:center;font-size:12px;color:#777;'>© 2025 Comparador de Farmacias Chile</div>
     </div>
@@ -166,68 +167,64 @@ def strip_categorias():
     )
     st.session_state["categoria"] = cat
 
-# ============= GRID DE PRODUCTOS (CON ❤️ FAVORITOS) =============
+# ============= GRID AUTO (Opción D) CON ❤️ =============
 def grid_productos(items):
+    cols = st.columns(4)  # Streamlit lo ajusta automáticamente según espacio
 
-    st.markdown("<div class='grid'>", unsafe_allow_html=True)
-
+    idx = 0
     for p in items:
-        st.markdown("<div class='card'>", unsafe_allow_html=True)
+        with cols[idx % 4]:
+            st.markdown("<div class='card'>", unsafe_allow_html=True)
 
-        st.image(p["img"])
-        st.write(f"**{p['nombre']}**")
+            st.image(p["img"])
+            st.write(f"**{p['nombre']}**")
 
-        col1, col2 = st.columns([0.7, 0.3])
+            c1, c2 = st.columns([0.7, 0.3])
 
-        with col1:
-            if st.button("Ver detalle", key=f"ver_{p['nombre']}"):
-                st.session_state["producto"] = p["nombre"]
-                st.session_state["page"] = "detalle"
+            with c1:
+                if st.button("Ver detalle", key=f"det_{p['nombre']}"):
+                    st.session_state["producto"] = p["nombre"]
+                    st.session_state["page"] = "detalle"
 
-        with col2:
-            if p["nombre"] in st.session_state["favoritos"]:
-                label = "💔"
-            else:
-                label = "❤️"
+            with c2:
+                is_fav = p["nombre"] in st.session_state["favoritos"]
+                label = "💔" if is_fav else "❤️"
 
-            if st.button(label, key=f"fav_{p['nombre']}"):
-                if p["nombre"] in st.session_state["favoritos"]:
-                    st.session_state["favoritos"].remove(p["nombre"])
-                else:
-                    st.session_state["favoritos"].append(p["nombre"])
+                if st.button(label, key=f"fav_{p['nombre']}"):
+                    if is_fav:
+                        st.session_state["favoritos"].remove(p["nombre"])
+                    else:
+                        st.session_state["favoritos"].append(p["nombre"])
 
-        st.markdown("</div>", unsafe_allow_html=True)
+            st.markdown("</div>", unsafe_allow_html=True)
 
-    st.markdown("</div>", unsafe_allow_html=True)
+        idx += 1
 
-# ============= FILTRADO POR CATEGORÍA =============
-def productos_filtrados():
-    cat = st.session_state["categoria"]
-    if cat == "Todos":
-        return PRODUCTOS
-    return [p for p in PRODUCTOS if p["categoria"] == cat]
-
-# ============= PÁGINAS =============
-def page_home():
-    topbar()
-    st.subheader("Categorías")
-    strip_categorias()
-
-    st.subheader("Productos")
-    productos = productos_filtrados()
-    grid_productos(productos)
-
-    footer()
-
+# ============= DETALLE DE PRODUCTO CON ❤️ AL LADO DEL PRECIO =============
 def page_detalle():
     topbar()
-    nombre = st.session_state["producto"]
-    prod = next(p for p in PRODUCTOS if p["nombre"] == nombre)
+
+    prod = next(p for p in PRODUCTOS if p["nombre"] == st.session_state["producto"])
 
     st.title(prod["nombre"])
     st.image(prod["img"])
 
-    st.write("### Precios en farmacias")
+    # Encabezado de precios + corazón
+    cA, cB = st.columns([0.85, 0.15])
+
+    with cA:
+        st.write("### Precio y disponibilidad")
+
+    with cB:
+        is_fav = prod["nombre"] in st.session_state["favoritos"]
+        label = "💔" if is_fav else "❤️"
+
+        if st.button(label, key=f"favdet_{prod['nombre']}"):
+            if is_fav:
+                st.session_state["favoritos"].remove(prod["nombre"])
+            else:
+                st.session_state["favoritos"].append(prod["nombre"])
+
     precios = prod["precios"]
     menor = min(precios.values())
 
@@ -237,25 +234,30 @@ def page_detalle():
 
     st.divider()
     st.write("### Productos relacionados")
-    relacionados = [p for p in PRODUCTOS if p["categoria"] == prod["categoria"] and p["nombre"] != prod["nombre"]][:4]
-    grid_productos(relacionados)
 
+    relacionados = [
+        p for p in PRODUCTOS
+        if p["categoria"] == prod["categoria"] and p["nombre"] != prod["nombre"]
+    ][:4]
+
+    grid_productos(relacionados)
     footer()
 
+# ============= FAVORITOS =============
 def page_favoritos():
     topbar()
     st.subheader("❤️ Mis favoritos")
 
-    if not st.session_state["favoritos"]:
-        st.info("Aún no has agregado productos a favoritos.")
-        footer()
-        return
+    favs = [p for p in PRODUCTOS if p["nombre"] in st.session_state["favoritos"]]
 
-    favoritos = [p for p in PRODUCTOS if p["nombre"] in st.session_state["favoritos"]]
-    grid_productos(favoritos)
+    if not favs:
+        st.info("Todavía no has agregado favoritos.")
+    else:
+        grid_productos(favs)
 
     footer()
 
+# ============= MENÚ =============
 def page_menu():
     topbar()
     st.subheader("Opciones")
@@ -264,7 +266,7 @@ def page_menu():
         st.session_state["page"] = "favoritos"
 
     if st.button("📩 Contacto"):
-        st.success("Puedes escribirnos a **soporte@comparadorfarmacias.cl**. Respondemos en 24 horas 😊")
+        st.success("Puedes escribirnos a **soporte@comparadorfarmacias.cl**")
 
     if st.button("Volver al inicio"):
         st.session_state["page"] = "home"
@@ -273,10 +275,25 @@ def page_menu():
 
 # ============= ROUTER =============
 if st.session_state["page"] == "home":
-    page_home()
+    topbar()
+    st.subheader("Categorías")
+    strip_categorias()
+
+    st.subheader("Productos")
+    prods = [
+        p for p in PRODUCTOS
+        if st.session_state["categoria"] == "Todos"
+        or p["categoria"] == st.session_state["categoria"]
+    ]
+
+    grid_productos(prods)
+    footer()
+
 elif st.session_state["page"] == "detalle":
     page_detalle()
+
 elif st.session_state["page"] == "favoritos":
     page_favoritos()
+
 else:
     page_menu()
