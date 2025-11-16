@@ -9,7 +9,7 @@ if "page" not in st.session_state:
 if "producto" not in st.session_state:
     st.session_state["producto"] = None
 if "categoria" not in st.session_state:
-    st.session_state["categoria"] = "Productos destacados"
+    st.session_state["categoria"] = "Todos"
 
 # ======== DATA DE EJEMPLO (placeholder) ========
 CATEGORIAS = ["Analgésicos", "Antibióticos", "Vitaminas", "Respiratorios", "Dermatológicos", "Digestivos", "Cuidado personal"]
