@@ -240,8 +240,12 @@ def topbar():
     with cols[0]:
         if st.button("🔍", help="Buscar (placeholder)", key="btn_search"):
             pass  # TODO: acción de búsqueda
-    with cols[1]:
-        st.markdown(f"<div class='topbar-logo'><img src='{LOGO_URL}' width='28' style='vertical-align:middle;margin-right:8px;'/>Comparador de Farmacias</div>", unsafe_allow_html=True)
+        with cols[1]:
+        if st.button("🏥  Comparador de Farmacias", key="btn_home_logo", help="Volver al inicio"):
+            # Al hacer clic, siempre te manda al inicio
+            st.session_state["page"] = "home"
+            st.session_state["producto"] = None
+            st.session_state["categoria"] = "Todos"
     with cols[2]:
         if st.button("☰", help="Opciones", key="btn_menu"):
             st.session_state["page"] = "menu"
