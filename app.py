@@ -12,7 +12,7 @@ if "categoria" not in st.session_state:
     st.session_state["categoria"] = "Todos"
 
 # ======== DATA DE EJEMPLO (placeholder) ========
-CATEGORIAS = ["Analgésicos", "Antibióticos", "Vitaminas", "Respiratorios", "Dermatológicos", "Digestivos", "Cuidado personal"]
+CATEGORIAS = ["Todos", "Analgésicos", "Antibióticos", "Vitaminas", "Respiratorios", "Dermatológicos", "Digestivos", "Cuidado personal"]
 
 PRODUCTOS = [
     {
