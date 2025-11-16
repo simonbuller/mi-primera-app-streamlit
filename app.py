@@ -290,10 +290,10 @@ def grid_productos(items):
     st.markdown("</div>", unsafe_allow_html=True)
 
 def productos_filtrados_por_categoria():
-    if st.session_state["categoria"] == "Destacados":
+    cat = st.session_state["categoria"]
+    if cat == "Todos":
         return PRODUCTOS
-    return [p for p in PRODUCTOS if p["categoria"] == st.session_state["categoria"]]
-
+    return [p for p in PRODUCTOS if p["categoria"] == cat]
 # ============= PÁGINAS =============
 def page_home():
     topbar()
