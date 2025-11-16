@@ -260,17 +260,13 @@ def footer():
     """, unsafe_allow_html=True)
 
 def strip_categorias():
-    st.markdown("<div class='cat-strip'>", unsafe_allow_html=True)
-    # Render chips como botones en columnas fluidas (simples y robustos)
-    chip_cols = st.columns(len(CATEGORIAS))
-    for i, cat in enumerate(CATEGORIAS):
-        with chip_cols[i]:
-            active = (cat == st.session_state["categoria"])
-            label = f"● {cat}" if active else cat
-            if st.button(label, key=f"chip_{cat}"):
-                st.session_state["categoria"] = cat
-    st.markdown("</div>", unsafe_allow_html=True)
-
+    categoria_seleccionada = st.radio(
+        "Selecciona una categoría:",
+        CATEGORIAS,
+        index=CATEGORIAS.index(st.session_state["categoria"]),
+        horizontal=True
+    )
+    st.session_state["categoria"] = categoria_seleccionada
 def grid_productos(items):
     st.markdown("<div class='grid'>", unsafe_allow_html=True)
     # Hacemos filas a mano con columns para compatibilidad Streamlit
