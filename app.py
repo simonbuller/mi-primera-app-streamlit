@@ -3,16 +3,21 @@ import streamlit as st
 # ============= CONFIG =============
 st.set_page_config(page_title="Compara para ti", page_icon="💊", layout="wide")
 
-# Estado inicial
+# ============= ESTADO DE LA APLICACIÓN =============
 if "page" not in st.session_state:
     st.session_state["page"] = "home"
 if "producto" not in st.session_state:
     st.session_state["producto"] = None
 if "categoria" not in st.session_state:
     st.session_state["categoria"] = "Todos"
+if "favoritos" not in st.session_state:
+    st.session_state["favoritos"] = []
 
 # ======== DATA DE EJEMPLO (placeholder) ========
-CATEGORIAS = ["Todos", "Analgésicos", "Antibióticos", "Vitaminas", "Respiratorios", "Dermatológicos", "Digestivos", "Cuidado personal"]
+CATEGORIAS = [
+    "Todos", "Analgésicos", "Antibióticos", "Vitaminas",
+    "Respiratorios", "Dermatológicos", "Digestivos", "Cuidado personal"
+]
 
 PRODUCTOS = [
     {
@@ -104,103 +109,99 @@ PRODUCTOS = [
 ICON_INSTAGRAM = "https://cdn-icons-png.flaticon.com/512/2111/2111463.png"
 ICON_TIKTOK    = "https://cdn-icons-png.flaticon.com/512/3046/3046122.png"
 ICON_EMAIL     = "https://cdn-icons-png.flaticon.com/512/732/732200.png"
-LOGO_URL       = "https://upload.wikimedia.org/wikipedia/commons/7/7d/Medical_icon.png"
 
-# ============= ESTILOS (CSS) =============
+# ============= CSS PERSONALIZADO =============
 st.markdown("""
 <style>
 .main > div { padding-bottom: 90px; }
-
-.topbar {
-  position: sticky; top: 0; z-index: 999;
-  background: #ffffff; border-bottom: 1px solid #eee;
-  padding: 8px 12px;
-}
-
-.grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px;
-}
-.card {
-  border: 1px solid #eee; border-radius: 10px; padding: 10px; background: #fff;
-}
+.topbar { position: sticky; top: 0; z-index: 999; background: #fff; border-bottom: 1px solid #eee; padding: 8px 12px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+.card { border: 1px solid #eee; border-radius: 10px; padding: 10px; background: #fff; }
 .card img { width: 100%; height: 140px; object-fit: cover; border-radius: 8px; }
-.card-title { font-weight: 600; margin-top: 8px; }
-
-.footer {
-  position: fixed; bottom: 0; left: 0; right: 0; z-index: 999;
-  border-top: 1px solid #eee; background: #ffffff;
-}
-.footer-inner {
-  display: flex; justify-content: center; align-items: center;
-  gap: 20px; padding: 10px 0;
-}
-.footer-inner img { width: 26px; height: 26px; }
-.footer-note { text-align: center; font-size: 12px; color: #777; margin-bottom: 6px; }
+.footer { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #eee; }
+.footer-inner { display: flex; justify-content: center; gap: 20px; padding: 10px 0; }
+.footer-inner img { width: 26px; }
 </style>
 """, unsafe_allow_html=True)
 
-# ============= COMPONENTES UI =============
-
+# ============= TOPBAR =============
 def topbar():
     st.markdown("<div class='topbar'>", unsafe_allow_html=True)
-    cols = st.columns([0.07, 0.86, 0.07])
+    col1, col2, col3 = st.columns([0.1, 0.8, 0.1])
 
-    with cols[0]:
-        if st.button("🔍", key="btn_search"):
-            pass
+    with col1:
+        st.button("🔍", key="buscar")
 
-    with cols[1]:
-        if st.button("🏥  Comparador de Farmacias", key="btn_home_logo"):
+    with col2:
+        if st.button("🏥  Comparador de Farmacias", key="home_logo"):
             st.session_state["page"] = "home"
             st.session_state["producto"] = None
-            st.session_state["categoria"] = "Todos"
 
-    with cols[2]:
-        if st.button("☰", key="btn_menu"):
+    with col3:
+        if st.button("☰", key="menu"):
             st.session_state["page"] = "menu"
 
     st.markdown("</div>", unsafe_allow_html=True)
 
+# ============= FOOTER =============
 def footer():
-    st.markdown("""
+    st.markdown(f"""
     <div class='footer'>
-      <div class='footer-inner'>
-        <img src='""" + ICON_INSTAGRAM + """'/>
-        <img src='""" + ICON_TIKTOK + """'/>
-        <img src='""" + ICON_EMAIL + """'/>
-      </div>
-      <div class='footer-note'>© 2025 Comparador de Farmacias Chile</div>
+        <div class='footer-inner'>
+            <img src='{ICON_INSTAGRAM}'/>
+            <img src='{ICON_TIKTOK}'/>
+            <img src='{ICON_EMAIL}'/>
+        </div>
+        <div style='text-align:center;font-size:12px;color:#777;'>© 2025 Comparador de Farmacias Chile</div>
     </div>
     """, unsafe_allow_html=True)
 
+# ============= CATEGORÍAS =============
 def strip_categorias():
-    categoria_seleccionada = st.radio(
+    cat = st.radio(
         "Selecciona una categoría:",
         CATEGORIAS,
-        index=CATEGORIAS.index(st.session_state["categoria"]),
-        horizontal=True
+        horizontal=True,
+        index=CATEGORIAS.index(st.session_state["categoria"])
     )
-    st.session_state["categoria"] = categoria_seleccionada
+    st.session_state["categoria"] = cat
 
+# ============= GRID DE PRODUCTOS (CON ❤️ FAVORITOS) =============
 def grid_productos(items):
+
     st.markdown("<div class='grid'>", unsafe_allow_html=True)
 
-    for i in range(0, len(items), 4):
-        row = items[i:i+4]
-        cols = st.columns(len(row))
-        for j, p in enumerate(row):
-            with cols[j]:
-                st.markdown("<div class='card'>", unsafe_allow_html=True)
-                st.image(p["img"])
-                st.markdown(f"<div class='card-title'>{p['nombre']}</div>", unsafe_allow_html=True)
-                if st.button("Ver detalle", key=f"ver_{p['nombre']}"):
-                    st.session_state["producto"] = p["nombre"]
-                    st.session_state["page"] = "detalle"
-                st.markdown("</div>", unsafe_allow_html=True)
+    for p in items:
+        st.markdown("<div class='card'>", unsafe_allow_html=True)
+
+        st.image(p["img"])
+        st.write(f"**{p['nombre']}**")
+
+        col1, col2 = st.columns([0.7, 0.3])
+
+        with col1:
+            if st.button("Ver detalle", key=f"ver_{p['nombre']}"):
+                st.session_state["producto"] = p["nombre"]
+                st.session_state["page"] = "detalle"
+
+        with col2:
+            if p["nombre"] in st.session_state["favoritos"]:
+                label = "💔"
+            else:
+                label = "❤️"
+
+            if st.button(label, key=f"fav_{p['nombre']}"):
+                if p["nombre"] in st.session_state["favoritos"]:
+                    st.session_state["favoritos"].remove(p["nombre"])
+                else:
+                    st.session_state["favoritos"].append(p["nombre"])
+
+        st.markdown("</div>", unsafe_allow_html=True)
 
     st.markdown("</div>", unsafe_allow_html=True)
 
-def productos_filtrados_por_categoria():
+# ============= FILTRADO POR CATEGORÍA =============
+def productos_filtrados():
     cat = st.session_state["categoria"]
     if cat == "Todos":
         return PRODUCTOS
@@ -212,50 +213,62 @@ def page_home():
     st.subheader("Categorías")
     strip_categorias()
 
-    st.subheader("Productos más relevantes")
-    items = productos_filtrados_por_categoria()
-    if not items:
-        st.info("No hay productos en esta categoría.")
-    else:
-        grid_productos(items)
+    st.subheader("Productos")
+    productos = productos_filtrados()
+    grid_productos(productos)
 
     footer()
 
 def page_detalle():
     topbar()
-    nombre = st.session_state.get("producto") or "Medicamento"
-    prod = next((p for p in PRODUCTOS if p["nombre"] == nombre), None)
+    nombre = st.session_state["producto"]
+    prod = next(p for p in PRODUCTOS if p["nombre"] == nombre)
 
-    st.subheader(nombre)
+    st.title(prod["nombre"])
+    st.image(prod["img"])
 
-    cols = st.columns([1, 1])
-    with cols[0]:
-        st.image(prod["img"])
+    st.write("### Precios en farmacias")
+    precios = prod["precios"]
+    menor = min(precios.values())
 
-    with cols[1]:
-        st.markdown("### Precio y disponibilidad")
-        if prod:
-            precios = prod["precios"]
-            menor = min(precios.values())
-            for farmacia, precio in precios.items():
-                badge = " (más barato)" if precio == menor else ""
-                st.write(f"- **{farmacia}:** ${precio:,}{badge}")
+    for farmacia, precio in precios.items():
+        barato = " (más barato)" if precio == menor else ""
+        st.write(f"• **{farmacia}:** ${precio:,}{barato}")
 
-    st.markdown("---")
-    st.subheader("Productos relacionados")
-    relacionados = [p for p in PRODUCTOS if p["nombre"] != nombre][:4]
+    st.divider()
+    st.write("### Productos relacionados")
+    relacionados = [p for p in PRODUCTOS if p["categoria"] == prod["categoria"] and p["nombre"] != prod["nombre"]][:4]
     grid_productos(relacionados)
+
+    footer()
+
+def page_favoritos():
+    topbar()
+    st.subheader("❤️ Mis favoritos")
+
+    if not st.session_state["favoritos"]:
+        st.info("Aún no has agregado productos a favoritos.")
+        footer()
+        return
+
+    favoritos = [p for p in PRODUCTOS if p["nombre"] in st.session_state["favoritos"]]
+    grid_productos(favoritos)
 
     footer()
 
 def page_menu():
     topbar()
     st.subheader("Opciones")
-    st.write("Favoritos (próximamente)")
-    st.write("Historial (próximamente)")
-    st.write("Contacto (próximamente)")
+
+    if st.button("❤️ Favoritos"):
+        st.session_state["page"] = "favoritos"
+
+    if st.button("📩 Contacto"):
+        st.success("Puedes escribirnos a **soporte@comparadorfarmacias.cl**. Respondemos en 24 horas 😊")
+
     if st.button("Volver al inicio"):
         st.session_state["page"] = "home"
+
     footer()
 
 # ============= ROUTER =============
@@ -263,5 +276,7 @@ if st.session_state["page"] == "home":
     page_home()
 elif st.session_state["page"] == "detalle":
     page_detalle()
+elif st.session_state["page"] == "favoritos":
+    page_favoritos()
 else:
     page_menu()
