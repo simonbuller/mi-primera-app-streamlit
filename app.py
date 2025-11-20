@@ -47,18 +47,15 @@ st.markdown("""
     padding:40px 0; 
     text-align:center;
 }
-
 .topbar button{
-    font-size:48px !important;   
-    font-weight:900 !important; 
+    font-size:48px !important;
+    font-weight:900 !important;
     padding:28px 50px !important;
     border-radius:14px !important;
 }
-
 .card{border:1px solid #eee;border-radius:10px;padding:10px;margin-bottom:16px;background:#fff;}
 .card img{width:100%;height:140px;object-fit:cover;border-radius:8px;}
 .detalle-img{width:300px;height:300px;object-fit:contain;margin:auto;}
-
 .footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #eee;}
 .footer-inner{display:flex;justify-content:center;gap:20px;padding:10px 0;}
 .footer-inner img{width:26px;}
@@ -69,15 +66,12 @@ st.markdown("""
 def topbar():
     st.markdown("<div class='topbar'>", unsafe_allow_html=True)
     c1, c2 = st.columns([0.90, 0.10])
-
     with c1:
         if st.button("🏥  COMPARADOR DE FARMACIAS", key="homebanner"):
             st.session_state["page"] = "home"; st.session_state["producto"] = None
-
     with c2:
         if st.button("☰", key="menu_btn"):
             st.session_state["page"] = "menu"
-
     st.markdown("</div>", unsafe_allow_html=True)
 
 # ===== FOOTER =====
@@ -115,10 +109,22 @@ def grid_productos(items):
             st.markdown("</div>", unsafe_allow_html=True)
         idx += 1
 
-# ===== DETALLE =====
+# ===== DETALLE (CON FIX) =====
 def page_detalle():
     topbar()
-    prod = next(p for p in PRODUCTOS if p["nombre"] == st.session_state["producto"])
+
+    # --- FIX PARA ERROR DE NINGÚN PRODUCTO SELECCIONADO ---
+    if not st.session_state["producto"]:
+        st.session_state["page"] = "home"
+        st.experimental_rerun()
+
+    prod = next((p for p in PRODUCTOS if p["nombre"] == st.session_state["producto"]), None)
+
+    if prod is None:
+        st.session_state["page"] = "home"
+        st.experimental_rerun()
+
+    # --------------------------------------------------------
 
     st.title(prod["nombre"])
     st.markdown(f"<img class='detalle-img' src='{prod['img']}'>", unsafe_allow_html=True)
@@ -133,7 +139,7 @@ def page_detalle():
     grid_productos(rel)
     footer()
 
-# ===== MENU =====
+# ===== MENÚ =====
 def page_menu():
     topbar()
     if st.button("❤️ Favoritos"): st.session_state["page"] = "favoritos"
