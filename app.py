@@ -8,6 +8,7 @@ if "producto" not in st.session_state: st.session_state["producto"] = None
 if "categoria" not in st.session_state: st.session_state["categoria"] = "Todos"
 if "favoritos" not in st.session_state: st.session_state["favoritos"] = []
 
+
 # ===== DATOS =====
 CATEGORIAS = ["Todos", "Analgésicos", "Antibióticos", "Vitaminas",
               "Respiratorios", "Dermatológicos", "Digestivos", "Cuidado personal"]
@@ -34,6 +35,7 @@ PRODUCTOS = [
     {"nombre": "Prozone Gel", "img": "https://beta.cruzverde.cl/on/demandware.static/-/Sites-masterCatalog_Chile/default/dwad1227f9/images/large/565638-prozone-gel-fotoprotector-fps-30-100-gr.jpg",
      "categoria": "Dermatológicos", "precios": {"Cruz Verde": 16050, "Salcobrand": 19999, "Ahumada": 17589}},
 ]
+
 
 # ===== CSS =====
 st.markdown("""
@@ -62,17 +64,20 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+
 # ===== TOPBAR =====
 def topbar():
     st.markdown("<div class='topbar'>", unsafe_allow_html=True)
     c1, c2 = st.columns([0.90, 0.10])
     with c1:
         if st.button("🏥  COMPARADOR DE FARMACIAS", key="homebanner"):
-            st.session_state["page"] = "home"; st.session_state["producto"] = None
+            st.session_state["page"] = "home"
+            st.session_state["producto"] = None
     with c2:
         if st.button("☰", key="menu_btn"):
             st.session_state["page"] = "menu"
     st.markdown("</div>", unsafe_allow_html=True)
+
 
 # ===== FOOTER =====
 def footer():
@@ -86,45 +91,45 @@ def footer():
     </div>
     """, unsafe_allow_html=True)
 
+
 # ===== GRID =====
 def grid_productos(items):
     cols = st.columns(4)
-    idx = 0
-    for p in items:
-        with cols[idx % 4]:
+    for i, p in enumerate(items):
+        with cols[i % 4]:
             st.markdown("<div class='card'>", unsafe_allow_html=True)
             st.image(p["img"])
             st.write(f"**{p['nombre']}**")
 
             c1, c2 = st.columns([0.7, 0.3])
             with c1:
-                if st.button("Ver detalle", key=f"det_{p['nombre']}"):
-                    st.session_state["producto"] = p["nombre"]; st.session_state["page"] = "detalle"
+                if st.button("Ver detalle", key=f"det_{i}"):
+                    st.session_state["producto"] = p["nombre"]
+                    st.session_state["page"] = "detalle"
             with c2:
                 isfav = p["nombre"] in st.session_state["favoritos"]
-                if st.button("💔" if isfav else "❤️", key=f"fav_{p['nombre']}"):
-                    if isfav: st.session_state["favoritos"].remove(p["nombre"])
-                    else: st.session_state["favoritos"].append(p["nombre"])
+                if st.button("💔" if isfav else "❤️", key=f"fav_{i}"):
+                    if isfav:
+                        st.session_state["favoritos"].remove(p["nombre"])
+                    else:
+                        st.session_state["favoritos"].append(p["nombre"])
 
             st.markdown("</div>", unsafe_allow_html=True)
-        idx += 1
 
-# ===== DETALLE (CON FIX) =====
+
+# ===== DETALLE =====
 def page_detalle():
     topbar()
 
-    # --- FIX PARA ERROR DE NINGÚN PRODUCTO SELECCIONADO ---
     if not st.session_state["producto"]:
         st.session_state["page"] = "home"
-        st.experimental_rerun()
+        return
 
     prod = next((p for p in PRODUCTOS if p["nombre"] == st.session_state["producto"]), None)
 
     if prod is None:
         st.session_state["page"] = "home"
-        st.experimental_rerun()
-
-    # --------------------------------------------------------
+        return
 
     st.title(prod["nombre"])
     st.markdown(f"<img class='detalle-img' src='{prod['img']}'>", unsafe_allow_html=True)
@@ -134,17 +139,22 @@ def page_detalle():
     for f, p in precios.items():
         st.write(f"• **{f}:** ${p:,}" + (" (más barato)" if p == menor else ""))
 
-    st.write("### Relacionados")
     rel = [p for p in PRODUCTOS if p["categoria"] == prod["categoria"] and p["nombre"] != prod["nombre"]][:4]
+
+    st.write("### Relacionados")
     grid_productos(rel)
     footer()
+
 
 # ===== MENÚ =====
 def page_menu():
     topbar()
-    if st.button("❤️ Favoritos"): st.session_state["page"] = "favoritos"
-    if st.button("Volver"): st.session_state["page"] = "home"
+    if st.button("❤️ Favoritos"):
+        st.session_state["page"] = "favoritos"
+    if st.button("Volver"):
+        st.session_state["page"] = "home"
     footer()
+
 
 # ===== FAVORITOS =====
 def page_favoritos():
@@ -153,10 +163,12 @@ def page_favoritos():
     grid_productos(favs)
     footer()
 
+
 # ===== BUSCADOR =====
 def filtro_busqueda(lista):
     q = st.text_input("🔎 Buscar...", "")
     return [p for p in lista if q.lower() in p["nombre"].lower()]
+
 
 # ===== ROUTER =====
 if st.session_state["page"] == "home":
@@ -173,6 +185,11 @@ if st.session_state["page"] == "home":
     grid_productos(filtrados)
     footer()
 
-elif st.session_state["page"] == "detalle": page_detalle()
-elif st.session_state["page"] == "favoritos": page_favoritos()
-else: page_menu()
+elif st.session_state["page"] == "detalle":
+    page_detalle()
+
+elif st.session_state["page"] == "favoritos":
+    page_favoritos()
+
+else:
+    page_menu()
