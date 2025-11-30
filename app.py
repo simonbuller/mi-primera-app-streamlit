@@ -68,7 +68,6 @@ CATEGORIAS = [
     "Vitaminas",
     "Respiratorios",
     "Dermatológicos",
-    "Digestivos"
 ]
 
 # PRODUCTOS:
