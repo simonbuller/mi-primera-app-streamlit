@@ -51,12 +51,6 @@ if "favoritos" not in st.session_state:
 
 
 
-# ======================================================================
-# DEFINICIÓN DE LA "BASE DE DATOS" DE LA APP
-# ======================================================================
-# En este proyecto no usamos una base de datos externa ni una API.
-# En su lugar, definimos manualmente los datos en estructuras de Python.
-# Esto es suficiente para una demo de aplicación.
 
 # CATEGORIAS:
 # Lista con las etiquetas de categorías disponibles.
